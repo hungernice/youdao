@@ -12,7 +12,38 @@
 	<body>
 		4
 		<script src="js/mui.min.js"></script>
-
+<script type="text/javascript" src="js/h.min.js" ></script>
+		<script>
+			var _self, _index, _next, _pre;
+			mui.plusReady(function(){
+				_self = plus.webview.currentWebview();
+				_next =plus.webview.getWebviewById("sub1.html");
+				_pre =plus.webview.getWebviewById("sub3.html");
+				_index =plus.webview.getLaunchWebview();
+				_self.drag({
+					direction: 'left',
+					moveMode: 'followFinger'
+				},{
+					view: _next,
+					moveMode: 'follow'
+				},function(e){
+					if(e.type =="end" && e.result){
+						_index.evalJS("h('#mFoot').find('a').removeClass('mui-active'); h('#nav1').addClass('mui-active')");
+					}
+				});
+				_self.drag({
+					direction: 'right',
+					moveMode: 'followFinger'
+				},{
+					view: _pre,
+					moveMode: 'follow'
+				},function(e){
+					if(e.type =="end" && e.result){
+						_index.evalJS("h('#mFoot').find('a').removeClass('mui-active'); h('#nav3').addClass('mui-active')");
+					}
+				});				
+			})
+		</script>
 	</body>
 
 </html>
