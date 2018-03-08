@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+
+		<link href="css/mui.css" rel="stylesheet" />
+		<link href="css/comm.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav hBg">
+		   <div class="logImg">
+		   		<img src="images/appLogo.png" />
+		   </div>
+		   <div class="searchBtn">
+		   		<!--<img src="images/searchBut.png" />-->
+		   		<p>请输入要翻译的文字</p>
+		   </div>
+		</header>
+		<nav class="mui-bar mui-bar-tab">
+		    <a class="mui-tab-item mui-active" id="nav1">
+		        <span class="mui-icon mui-icon-home"></span>
+		        <span class="mui-tab-label">词典</span>
+		    </a>
+		    <a class="mui-tab-item" id="nav2">
+		        <span class="mui-icon mui-icon-phone"></span>
+		        <span class="mui-tab-label">翻译</span>
+		    </a>
+		    <a class="mui-tab-item" id="nav3">
+		        <span class="mui-icon mui-icon-star"></span>
+		        <span class="mui-tab-label">热点</span>
+		    </a>
+		    <a class="mui-tab-item" id="nav4">
+		        <span class="mui-icon mui-icon-gear"></span>
+		        <span class="mui-tab-label">我的</span>
+		    </a>
+		</nav>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/h.min.js" ></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init({
+				subpages: [
+					{
+						url: 'sub1.html',
+						id: 'sub1.html',
+						styles: { top: "44px", bottom: "44px", width: "100%"}
+					},
+					{
+						url: 'sub2.html',
+						id: 'sub2.html',
+						styles: { top: "44px", bottom: "44px", width: "100%", left:"100%"}
+					},
+					{
+						url: 'sub3.html',
+						id: 'sub3.html',
+						styles: { top: "44px", bottom: "44px", width: "100%", left:"200%"}
+					},
+					{
+						url: 'sub4.html',
+						id: 'sub4.html',
+						styles: { top: "44px", bottom: "44px", width: "100%", left:"300%"}
+					}					
+				]
+			});
+			
+			function changeSub(index){
+				console.log(index);
+				
+				var Sub1= plus.webview.getWebviewById("sub1.html");
+				var Sub2= plus.webview.getWebviewById("sub2.html");
+				var Sub3= plus.webview.getWebviewById("sub3.html");
+				var Sub4= plus.webview.getWebviewById("sub4.html");
+				Sub1.setStyle({left: (1-index)*100 +'%'});
+				Sub2.setStyle({left: (2-index)*100 +'%'});
+				Sub3.setStyle({left: (3-index)*100 +'%'});
+				Sub4.setStyle({left: (4-index)*100 +'%'});
+				
+			}
+			h("#nav1").tap(function(){
+				changeSub(1);
+			});
+			h("#nav2").tap(function(){
+				changeSub(2);
+			});
+			h("#nav3").tap(function(){
+				changeSub(3);
+			});
+			h("#nav4").tap(function(){
+				changeSub(4);
+			});
+		</script>
+	</body>
+
+</html>
