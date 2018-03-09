@@ -10,11 +10,48 @@
 	</head>
 
 	<body>
-		1
+		<div class="mui-content">
+			<div class="mui-slider" >
+			  <div class="mui-slider-group mui-slider-loop" id="sliders"></div>
+			  <div class="mui-slider-indicator" id="points"></div>
+			</div>		
+			<ul class="mui-table-view" id="newsList"></ul>
+			<!--<ul class="mui-table-view">
+			    <li class="mui-table-view-cell mui-media">
+			        <a href="javascript:;">
+			            <img class="mui-media-object mui-pull-left" src="http://placehold.it/40x30">
+			            <div class="mui-media-body">
+			                <h4 class="mui-ellipsis title">幸福幸福幸福幸福幸福幸福幸福福幸福幸福幸福福幸福幸福幸福</h4>
+			                <p class="mui-ellipsis">能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
+			            </div>
+			        </a>
+			    </li>
+			    <li class="mui-table-view-cell mui-media">
+			        <a href="javascript:;">
+			            <img class="mui-media-object mui-pull-left" src="http://placehold.it/40x30">
+			            <div class="mui-media-body">
+			                木屋
+			                <p class="mui-ellipsis">想要这样一间小木屋，夏天挫冰吃瓜，冬天围炉取暖.</p>
+			            </div>
+			        </a>
+			    </li>
+			    <li class="mui-table-view-cell mui-media">
+			        <a href="javascript:;">
+			            <img class="mui-media-object mui-pull-left" src="http://placehold.it/40x30">
+			            <div class="mui-media-body">
+			                CBD
+			                <p class="mui-ellipsis">烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+			            </div>
+			        </a>
+			    </li>
+			</ul>-->
+		</div>
+
 
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" src="js/h.min.js" ></script>
 		<script>
+			mui.init();
 			var _self, _index, _next;
 			mui.plusReady(function(){
 				_self = plus.webview.currentWebview();
@@ -30,8 +67,58 @@
 					if(e.type =="end" && e.result){
 						_index.evalJS("h('#mFoot').find('a').removeClass('mui-active'); h('#nav2').addClass('mui-active')");
 					}
-				})
-			})
+				});
+
+				mui.get(		//轮播图
+					"http://hoa.hcoder.net/index.php?user=hcoder&pwd=hcoder&m=lunbo",					
+					function(res){						
+						var items =res.split("--hcSplitor--");
+						var htmls="", points="";
+						htmls ="<div class='mui-slider-item'><a href='#'>"+items[items.length-1]+"</div>";
+						for (var i=0; i<items.length; i++) {
+							htmls += "<div class='mui-slider-item'><a href='#'>"+items[i]+"</a></div>";
+							points += "<div class='mui-indicator'></div>";
+						}
+						htmls +="<div class='mui-slider-item'><a href='#'>"+items[0]+"</div>";
+						h("#sliders").html(htmls);
+						h("#points").html(points);
+						var gallery = mui('.mui-slider');
+					    gallery.slider({interval:3000});
+					}
+				);
+				mui.get("http://hoa.hcoder.net/index.php?user=hcoder&pwd=hcoder&m=mediaList&page=1", function(res){
+					var resData =res.split("--hcSplitor--");
+					var li="";
+					for (var i=0; i< resData.length; i++) {						
+						var listArr =resData[i].split("--hcListSplitor--");
+							li += '<li class="mui-table-view-cell mui-media">'+
+								        '<a href="javascript:openNews('+listArr[0]+');">'+
+								            '<img class="mui-media-object mui-pull-left" src="'+listArr[1]+'">'+
+								            '<div class="mui-media-body">'+
+								            	'<h4 class="mui-ellipsis title">'+listArr[2]+'</h4>'+
+								                '<p class="mui-ellipsis">'+listArr[3]+'</p>'+
+								            '</div>'+ 
+								        '</a>'+
+								    '</li>'
+					}
+					h("#newsList").html(li);
+				});
+				
+				
+				
+				
+			});
+			function openNews(index){				
+				mui.openWindow(
+					{
+						url: 'subPages/info.html',
+						id : 'subPages/info.html',
+						extras: {
+							newsId : index
+						}
+					}
+				)
+			}			
 		</script>
 	</body>
 

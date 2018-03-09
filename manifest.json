@@ -123,7 +123,7 @@
 					"xhdpi": "", /*720P高分屏启动图片，分辨率：720x1242*/
 					"xxhdpi": ""
 				}
-			}
+			},"debug":true
 		}
 	},
 	"dependencies": {
@@ -136,6 +136,13 @@
 					"sub4.html",
 					"sub3.html",
 					"sub2.html"
+				],
+				"priority": 0
+			},
+			"sub1.html": {
+				"resources": [],
+				"refer": [
+					"subPages/info.html"
 				],
 				"priority": 0
 			}

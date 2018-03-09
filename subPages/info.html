@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link href="../css/comm.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-content-padded{
+				font-size: 15px;
+    			color: #231a1a;
+			}
+			    
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav hBg">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title" id="title"></h1>
+		</header>
+		<div class="mui-content mui-content-padded">
+		   
+		</div>
+		
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript" src="../js/h.min.js" ></script>
+		<script>
+			mui.init();  
+			mui.plusReady(function(){
+				var _self =plus.webview.currentWebview();
+				mui.ajax({
+					url: "http://hoa.hcoder.net/index.php?user=hcoder&pwd=hcoder&m=info",
+					type: "get",
+					dataType: "json",
+					data:{
+						id: _self.newsId
+					},
+					success: function(res){
+						console.log(JSON.stringify(res));
+						h("#title").html(res.title);
+						h(".mui-content").html(res.content);
+					}
+				})
+			});
+			
+		</script>
+	</body>
+
+</html>

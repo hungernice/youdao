@@ -450,6 +450,7 @@ a:active
 .mui-pull-left
 {
     float: left;
+    color: #fff;
 }
 
 .mui-pull-right
@@ -1571,19 +1572,14 @@ input[type='submit']:enabled:active, input[type='submit'].mui-active:enabled,
     font-size: 17px;
     font-weight: 500;
     line-height: 44px;
-
     position: absolute;
-
     display: block;
-
     width: 100%;
     margin: 0 -10px;
     padding: 0;
-
     text-align: center;
     white-space: nowrap;
-
-    color: #000;
+    color: #F2F2F2;
 }
 
 .mui-title a
@@ -4556,13 +4552,12 @@ body > .mui-progressbar
     cursor: pointer;
 
     border-radius: 50%;
-    background: #aaa;
-    -webkit-box-shadow: 0 0 1px 1px rgba(130, 130, 130, .7);
-            box-shadow: 0 0 1px 1px rgba(130, 130, 130, .7);
+    background: #fff;
+
 }
 .mui-slider-indicator .mui-active.mui-indicator
 {
-    background: #fff;
+    background: #f03744;
 }
 .mui-slider-indicator .mui-icon
 {
