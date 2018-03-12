@@ -20,6 +20,7 @@
 		<header class="mui-bar mui-bar-nav hBg">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title" id="title"></h1>
+		    <a class="mui-icon mui-icon-redo mui-icon-right-nav mui-pull-right" id="share"></a>
 		</header>
 		<div class="mui-content mui-content-padded">
 		   
@@ -28,7 +29,8 @@
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript" src="../js/h.min.js" ></script>
 		<script>
-			mui.init();  
+			mui.init(); 
+			var news=null;
 			mui.plusReady(function(){
 				var _self =plus.webview.currentWebview();
 				mui.ajax({
@@ -39,12 +41,56 @@
 						id: _self.newsId
 					},
 					success: function(res){
-						console.log(JSON.stringify(res));
+						news= res;
 						h("#title").html(res.title);
 						h(".mui-content").html(res.content);
 					}
 				})
 			});
+			h("#share").tap(function(){	
+				var actionBtn =[{title: '微信好友'},{title: '朋友圈'}];
+				var actionSty ={title: '请选择分享到', cancel: '取消', buttons: actionBtn};
+				plus.nativeUI.actionSheet(actionSty, function(e){
+					if(e.index >0){
+						shares(e.index);
+					}
+					
+				});
+			});
+			var shareWX=null;
+			function shares(types){
+				plus.share.getServices(function(s){
+						console.log(JSON.stringify(s));
+						if(shareWX == null){
+							mui.toast("您未安装微信，请先下载");
+						}
+						for (var k in s) {
+							if(s[k].id == "weixin"){
+								shareWX= s[k];
+							}
+						}
+						var msg ={
+							content : news.title,
+            				href : "http://www.hcoder.net/id/"+news.id
+						}
+						if(types ==1){
+							msg.extra = {scene:"WXSceneSession"}
+						}
+						else if(types ==2){
+							 msg.extra = {scene:"WXSceneTimeline"}
+						}
+						shareWX.send(msg, function(){
+							mui.toast("分享成功");
+						}, function(){
+							mui.toast("分享失败");
+						});
+						
+						
+					},function(){
+						mui.toast("分享失败！")
+					});		
+					
+			}
 			
 		</script>
 	</body>

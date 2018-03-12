@@ -10,11 +10,102 @@
 	</head>
 
 	<body>
-		3
+		<div class="mui-content mui-scroll-wrapper" id="refreshCont">
+		    <div class="mui-scroll">
+		        <ul class="mui-table-view mui-table-view-chevron" id="newsList"></ul>
+		    </div>
+		</div>
+		
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" src="js/h.min.js" ></script>
 		<script>
-			var _self, _index, _next, _pre;
+			mui.init({
+				pullRefresh: {
+					container: '#refreshCont',
+					down: {
+						style: 'circle',
+						color: '#2BD009',
+						height: 50,
+						auto: true,
+						callback: getNewsList
+					},
+					up: {
+						style: 'circle',
+						color: '#2BD009',
+						height: 50,
+						auto: true,
+						callback: getNewsLoads
+					}
+				}  
+			});
+			var page =1;
+			function getNewsList(){		//下拉刷新
+				page= 1;
+				mui.get("http://hoa.hcoder.net/index.php?user=hcoder&pwd=hcoder&m=mediaList&page="+page, 
+					function(res){
+						var resData =res.split("--hcSplitor--");
+						var li="";
+						for (var i=0; i< resData.length; i++) {						
+							var listArr =resData[i].split("--hcListSplitor--");
+								li += '<li class="mui-table-view-cell mui-media">'+
+									        '<a href="javascript:openNews('+listArr[0]+');">'+
+									            '<img class="mui-media-object mui-pull-left" src="'+listArr[1]+'">'+
+									            '<div class="mui-media-body">'+
+									            	'<h4 class="mui-ellipsis title">'+listArr[2]+'</h4>'+
+									                '<p class="mui-ellipsis">'+listArr[3]+'</p>'+
+									            '</div>'+ 
+									        '</a>'+
+									    '</li>'
+						}
+						h("#newsList").html(li);
+						mui("#refreshCont").pullRefresh().endPulldownToRefresh(); 
+						page++
+				});			 
+			} 
+			
+			function getNewsLoads(){		//上拉加载		
+				console.log(page);
+				var _self= this;
+				mui.get("http://hoa.hcoder.net/index.php?user=hcoder&pwd=hcoder&m=mediaList&page="+page,
+					function(res){
+						if(res !=null){
+							var resData =res.split("--hcSplitor--");
+							console.log(resData);
+							for (var i=0; i< resData.length; i++) {		
+								var li =document.createElement("li");
+								li.className= 'mui-table-view-cell mui-media';
+								var listArr =resData[i].split("--hcListSplitor--");
+									li.innerHTML= '<a href="javascript:openNews('+listArr[0]+');">'+
+										            '<img class="mui-media-object mui-pull-left" src="'+listArr[1]+'">'+
+										            '<div class="mui-media-body">'+
+										            	'<h4 class="mui-ellipsis title">'+listArr[2]+'</h4>'+
+										                '<p class="mui-ellipsis">'+listArr[3]+'</p>'+
+										            '</div>'+ 
+										        '</a>'; 
+								h(li).appendTo("#newsList");							
+							}						
+							page++;		
+							_self.endPullupToRefresh(false);	
+							return false;
+						}  
+						else if(res ==null){
+							mui.toast("没有更多了")
+						}
+
+					});
+			}
+			function openNews(index){				
+				mui.openWindow(
+					{
+						url: 'subPages/info.html',
+						id : 'subPages/info.html',
+						extras: {
+							newsId : index
+						}
+					}
+				)
+			}
+			var _self, _index, _next, _pre; 
 			mui.plusReady(function(){
 				_self = plus.webview.currentWebview();
 				_next =plus.webview.getWebviewById("sub4.html");
@@ -22,7 +113,7 @@
 				_index =plus.webview.getLaunchWebview();
 				_self.drag({
 					direction: 'left',
-					moveMode: 'followFinger'
+					moveMode: 'followFinger' 
 				},{
 					view: _next,
 					moveMode: 'follow'

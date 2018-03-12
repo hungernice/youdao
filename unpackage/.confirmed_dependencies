@@ -14,5 +14,10 @@
 		"refer": [
 			"subPages/info.html"
 		]
+	},
+	"sub3.html": {
+		"refer": [
+			"subPages/info.html"
+		]
 	}
 }

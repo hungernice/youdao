@@ -7,10 +7,25 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="css/mui.css" rel="stylesheet" />
 		<link href="css/comm.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-text-justify{
+				display: none;
+			}
+		</style>
 	</head>
 
 	<body>
-		2
+		<div class="mui-content-padded">
+			<textarea id="keyWords" style="height: 120px;"></textarea>
+			<button class="mui-btn mui-btn-block" id="sbtBtn">开始翻译</button>
+		</div>
+		<div class="mui-content-padded">
+			
+			<p class="mui-text-justify">中译英:</p>
+			<p class="mui-text-justify" id="resText"></p>
+			<p class="mui-text-justify">更多翻译:</p>
+			<p class="mui-text-justify" id="basic"></p>
+		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" src="js/h.min.js" ></script>
 		<script>
@@ -43,6 +58,32 @@
 					}
 				});				
 			})
+			mui.ready(function(){				
+				h("#sbtBtn").tap(function(){
+					var keywords =h("#keyWords").val();
+					if(keywords){
+						mui.ajax({
+							url: 'http://fanyi.youdao.com/openapi.do?keyfrom=hcoder&key=1222700867&type=data&doctype=json&version=1.1',
+							type: "get",
+							data: {
+								q: keywords
+							},
+							dataType: "json",
+							success: function(res){
+								h("#resText").html(res.translation);
+								h("#basic").html(res.web[0].value);
+								h(".mui-text-justify").show();
+							},
+							error: function(){
+								mui.toast("网络出问题，翻译失败")
+							}
+						});						
+					}
+					else{
+						mui.toast("请输入要翻译的文本")
+					}
+				});
+			});
 		</script>
 	</body>
 

@@ -16,18 +16,17 @@
 		   		<img src="images/appLogo.png" />
 		   </div>
 		   <div class="searchBtn">
-		   		<!--<img src="images/searchBut.png" />-->
 		   		<p>请输入要翻译的文字</p>
 		   </div>
 		</header>
 		<nav class="mui-bar mui-bar-tab" id="mFoot">
 		    <a class="mui-tab-item mui-active" id="nav1">
 		        <span class="mui-icon mui-icon-home"></span>
-		        <span class="mui-tab-label">词典</span>
+		        <span class="mui-tab-label">首页</span>
 		    </a>
 		    <a class="mui-tab-item" id="nav2">
 		        <span class="mui-icon mui-icon-phone"></span>
-		        <span class="mui-tab-label">翻译</span>
+		        <span class="mui-tab-label">词典</span>
 		    </a>
 		    <a class="mui-tab-item" id="nav3">
 		        <span class="mui-icon mui-icon-star"></span>
@@ -65,32 +64,38 @@
 					}					
 				]
 			});
+			mui.ready(function(){
+				function changeSub(index){
+					var Sub1= plus.webview.getWebviewById("sub1.html");
+					var Sub2= plus.webview.getWebviewById("sub2.html");
+					var Sub3= plus.webview.getWebviewById("sub3.html");
+					var Sub4= plus.webview.getWebviewById("sub4.html");
+					Sub1.setStyle({left: (1-index)*100 +'%'});
+					Sub2.setStyle({left: (2-index)*100 +'%'});
+					Sub3.setStyle({left: (3-index)*100 +'%'});
+					Sub4.setStyle({left: (4-index)*100 +'%'});
+					
+				}
+				h("#nav1").tap(function(){
+					changeSub(1);
+				});
+				h("#nav2").tap(function(){
+					changeSub(2);
+				});
+				h("#nav3").tap(function(){
+					changeSub(3);
+				});
+				h("#nav4").tap(function(){
+					changeSub(4);
+				});			
+				
+				h(".searchBtn").tap(function(){ 	//点击头部导航栏跳转
+					changeSub(2);
+					h("#mFoot").find("a").removeClass("mui-active");
+					h("#nav2").addClass("mui-active");
+				});
+			});
 			
-			function changeSub(index){
-				console.log(index);
-				
-				var Sub1= plus.webview.getWebviewById("sub1.html");
-				var Sub2= plus.webview.getWebviewById("sub2.html");
-				var Sub3= plus.webview.getWebviewById("sub3.html");
-				var Sub4= plus.webview.getWebviewById("sub4.html");
-				Sub1.setStyle({left: (1-index)*100 +'%'});
-				Sub2.setStyle({left: (2-index)*100 +'%'});
-				Sub3.setStyle({left: (3-index)*100 +'%'});
-				Sub4.setStyle({left: (4-index)*100 +'%'});
-				
-			}
-			h("#nav1").tap(function(){
-				changeSub(1);
-			});
-			h("#nav2").tap(function(){
-				changeSub(2);
-			});
-			h("#nav3").tap(function(){
-				changeSub(3);
-			});
-			h("#nav4").tap(function(){
-				changeSub(4);
-			});
 		</script>
 	</body>
 

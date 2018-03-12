@@ -456,6 +456,7 @@ a:active
 .mui-pull-right
 {
     float: right;
+    color: #fff;
 }
 
 .mui-list-unstyled
@@ -1219,7 +1220,7 @@ button.mui-active:enabled,
 .mui-btn.mui-active:enabled
 {
     color: #fff;
-    background-color: #929292;
+    background-color: #f03744;
 }
 input[type='button']:disabled, input[type='button'].mui-disabled,
 input[type='submit']:disabled,
@@ -1380,15 +1381,11 @@ input[type='submit']:enabled:active, input[type='submit'].mui-active:enabled,
     background-color: transparent;
 }
 
-.mui-btn-block
-{
-    font-size: 18px;
-
+.mui-btn-block{
+    font-size: 16px;
     display: block;
-
     width: 100%;
     margin-bottom: 10px;
-    padding: 15px 0;
 }
 
 .mui-btn .mui-badge
