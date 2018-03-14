@@ -59,18 +59,17 @@
 						}
 						h("#newsList").html(li);
 						mui("#refreshCont").pullRefresh().endPulldownToRefresh(); 
-						page++
+						mui("#refreshCont").pullRefresh().refresh(true);	//重置上拉
+						page++;
 				});			 
 			} 
 			
-			function getNewsLoads(){		//上拉加载		
-				console.log(page);
+			function getNewsLoads(){		//上拉加载
 				var _self= this;
 				mui.get("http://hoa.hcoder.net/index.php?user=hcoder&pwd=hcoder&m=mediaList&page="+page,
 					function(res){
-						if(res !=null){
+						if(res !="null"){
 							var resData =res.split("--hcSplitor--");
-							console.log(resData);
 							for (var i=0; i< resData.length; i++) {		
 								var li =document.createElement("li");
 								li.className= 'mui-table-view-cell mui-media';
@@ -85,11 +84,11 @@
 								h(li).appendTo("#newsList");							
 							}						
 							page++;		
-							_self.endPullupToRefresh(false);	
+							_self.endPullupToRefresh(false);	//取消转圈
 							return false;
 						}  
-						else if(res ==null){
-							mui.toast("没有更多了")
+						else{							
+							_self.endPullupToRefresh(true);		//
 						}
 
 					});
@@ -133,7 +132,7 @@
 						_index.evalJS("h('#mFoot').find('a').removeClass('mui-active'); h('#nav2').addClass('mui-active')");
 					}
 				});				
-			})
+			});
 		</script>
 	</body>
 

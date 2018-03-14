@@ -39,6 +39,7 @@
 		</nav>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" src="js/h.min.js" ></script>
+		<script type="text/javascript" src="js/wxLogin.js" ></script> 
 		<script type="text/javascript" charset="utf-8">
 			mui.init({
 				subpages: [
@@ -86,7 +87,16 @@
 					changeSub(3);
 				});
 				h("#nav4").tap(function(){
-					changeSub(4);
+					var uid =plus.storage.getItem('uid');
+//					console.log(uid);
+					if(!uid){
+						wxLogin('changeSub(4)');
+						return false;
+					}
+					else{
+						changeSub(4);
+					}
+					
 				});			
 				
 				h(".searchBtn").tap(function(){ 	//点击头部导航栏跳转

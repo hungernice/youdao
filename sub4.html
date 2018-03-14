@@ -10,9 +10,38 @@
 	</head>
 
 	<body>
-		4
+		<div class="mui-content">
+			<ul class="mui-table-view" style="padding: 25px 0;background: #ee0707;">
+			    <li class="mui-table-view-cell mui-media">
+			        <a href="javascript:;">
+			            <img class="mui-media-object mui-pull-right" id="faceImg" src="http://placehold.it/40x30">
+			            <div class="mui-media-body">
+			                <h4 style="font-weight: 300;color: #fff;font-size: 18px;" id="nickname">123</h4>
+			                <p class="mui-ellipsis" id="scipt">登录/注册</p>
+			            </div>
+			        </a>
+			    </li>
+			</ul>
+		    <ul class="mui-table-view" style="margin: 25px 0;">
+	            <li class="mui-table-view-cell">
+	                <a class="mui-navigate-right">我的</a>
+	            </li>
+	            <li class="mui-table-view-cell">
+	                <a class="mui-navigate-right">设置</a>
+	            </li> 
+	            <li class="mui-table-view-cell">
+	                <a class="mui-navigate-right">关于我们</a>
+	            </li>
+	        </ul>
+	        <ul class="mui-table-view">
+	        	 <li class="mui-table-view-cell" id="logout">
+	                <a class="mui-navigate-right">退出登录</a>
+	            </li>
+	        </ul>
+		</div>
 		<script src="js/mui.min.js"></script>
-<script type="text/javascript" src="js/h.min.js" ></script>
+		<script type="text/javascript" src="js/h.min.js" ></script>
+		<script type="text/javascript" src="js/wxLogin.js" ></script>
 		<script>
 			var _self, _index, _next, _pre;
 			mui.plusReady(function(){
@@ -20,7 +49,7 @@
 				_next =plus.webview.getWebviewById("sub1.html");
 				_pre =plus.webview.getWebviewById("sub3.html");
 				_index =plus.webview.getLaunchWebview();
-				_self.drag({
+				_self.drag({   
 					direction: 'left',
 					moveMode: 'followFinger'
 				},{
@@ -41,8 +70,11 @@
 					if(e.type =="end" && e.result){
 						_index.evalJS("h('#mFoot').find('a').removeClass('mui-active'); h('#nav3').addClass('mui-active')");
 					}
-				});				
-			})
+				});
+				
+				
+				
+			});
 		</script>
 	</body>
 
